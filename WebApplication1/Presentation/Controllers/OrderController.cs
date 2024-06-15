@@ -54,8 +54,7 @@ namespace WebApplication1.Presentation.Controllers
             return Ok(orderResponse);
         }
 
-        //В контроллере расчитываются купленные товары
-        //(при завершении заказа купленное количество товаров удаляется из пула продуктов)
+        // The number of items purchased is removed from the general product list.
         [HttpPost]
         public async Task<ActionResult> CreateOrder(OrderRequestCreate orderRequest)
         {
@@ -82,7 +81,7 @@ namespace WebApplication1.Presentation.Controllers
 
             return Ok();
         }
-        // Контроллер для расчета заказа. Подключаемся к сервису банка, проверяем данные и оплачиваем заказ
+        // The controller for processing orders. We connect to the bank's service to check the details and pay for the order.
 
         [HttpPut]
         [Route(template: "Calculate")]
