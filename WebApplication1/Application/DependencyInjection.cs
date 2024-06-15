@@ -8,7 +8,7 @@ namespace WebApplication1.Application
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInftastructure(this IServiceCollection services, ConfigurationManager configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, ConfigurationManager configuration)
         {
             #region Default services
 
@@ -40,6 +40,7 @@ namespace WebApplication1.Application
             services.AddTransient<OrderServiceHandler>();
 
             #endregion
+
             return services;
         }
     }

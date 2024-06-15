@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.Presentation.Common.DTO_s.Order
+﻿namespace WebApplication1.Presentation.Common.DTO
 {
     public class OrderReqeustDelete
     {

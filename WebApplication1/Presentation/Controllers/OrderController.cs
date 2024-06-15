@@ -4,8 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication1.Domain.Entity;
 using WebApplication1.Domain.Enums;
 using WebApplication1.Infrastructure;
-using WebApplication1.Presentation.Common.DTO_s;
-using WebApplication1.Presentation.Common.DTO_s.Order;
+using WebApplication1.Presentation.Common.DTO;
 using WebApplication1.Application.Services.ServiceHandler;
 
 namespace WebApplication1.Presentation.Controllers
@@ -25,7 +24,6 @@ namespace WebApplication1.Presentation.Controllers
         }
 
         [HttpGet]
-        [Route(template: "GetAll")]
         public async Task<ActionResult> GetAllOrders()
         {
             var orders = await _dataContext.Order.Include(x=>x.Products).AsNoTracking().ToListAsync();
@@ -57,10 +55,8 @@ namespace WebApplication1.Presentation.Controllers
         }
 
         //В контроллере расчитываются купленные товары
-        //(при завершении заказа купленное количество товаров удаляется из пула продуктов )
-
+        //(при завершении заказа купленное количество товаров удаляется из пула продуктов)
         [HttpPost]
-        [Route(template: "Create")]
         public async Task<ActionResult> CreateOrder(OrderRequestCreate orderRequest)
         {
 
@@ -89,7 +85,7 @@ namespace WebApplication1.Presentation.Controllers
         // Контроллер для расчета заказа. Подключаемся к сервису банка, проверяем данные и оплачиваем заказ
 
         [HttpPut]
-        [Route(template: "CalculateOrder")]
+        [Route(template: "Calculate")]
         public async Task<ActionResult> CalculateOrder(PaymentOrder paymentOrder)
         {
             var order = await _dataContext.Order.FindAsync(paymentOrder.OrderId);
@@ -105,7 +101,6 @@ namespace WebApplication1.Presentation.Controllers
         }
 
         [HttpPut]
-        [Route(template: "Update")]
         public async Task<ActionResult> UpdateOrder(OrderRequestUpdate orderRequest)
         {
             var order = await _dataContext.Order.FindAsync(orderRequest.OrderId);
@@ -128,7 +123,6 @@ namespace WebApplication1.Presentation.Controllers
         }
 
         [HttpDelete]
-        [Route(template: "Delete")]
         public async Task<ActionResult> DeleteOrder(Guid id)
         {
             var order = await _dataContext.Order.FindAsync(id);
@@ -144,7 +138,7 @@ namespace WebApplication1.Presentation.Controllers
             return Ok();
         }
         [HttpDelete]
-        [Route(template: "DeleteProduct")]
+        [Route(template: "Product")]
         public async Task<ActionResult> DeleteProductFromOrder(OrderReqeustDelete orderReqeustDelete)
         {
             var order = await _dataContext.Order.Include(x=>x.Products).FirstOrDefaultAsync(x=>x.Id==orderReqeustDelete.OrderId);

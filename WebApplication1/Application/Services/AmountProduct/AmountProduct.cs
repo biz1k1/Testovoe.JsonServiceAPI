@@ -1,6 +1,5 @@
 ﻿using WebApplication1.Application.Common.Exceptions;
 using WebApplication1.Domain.Entity;
-using WebApplication1.Infrastructure;
 
 namespace WebApplication1.Application.Services
 {

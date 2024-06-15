@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebApplication1.Application.Services.ServiceHandler;
 using WebApplication1.Domain.Entity;
 using WebApplication1.Infrastructure;
-using WebApplication1.Presentation.Common.DTO_s;
-using WebApplication1.Presentation.Common.DTO_s.Product;
+using WebApplication1.Presentation.Common.DTO;
 
 namespace WebApplication1.Presentation.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class ProductController : ControllerBase
     {
         private readonly DataContext _dataContext;
@@ -22,7 +20,6 @@ namespace WebApplication1.Presentation.Controllers
         }
 
         [HttpGet]
-        [Route(template: "GetAll")]
         public async Task<ActionResult> GetAllProduct()
         {
             var product = await _dataContext.Product.AsNoTracking().ToListAsync();
@@ -53,7 +50,6 @@ namespace WebApplication1.Presentation.Controllers
         }
 
         [HttpPost]
-        [Route(template: "Create")]
         public async Task<ActionResult> CreateProduct(ProductRequestCreate productRequest)
         {
             var product = await _dataContext.Product.FirstOrDefaultAsync(x=>x.Name==productRequest.Name);
@@ -72,7 +68,6 @@ namespace WebApplication1.Presentation.Controllers
         }
 
         [HttpPut]
-        [Route(template: "Update")]
         public async Task<ActionResult> UpdateProduct(ProductRequestUpdate productRequest)
         {
             var product = await _dataContext.Product.FindAsync(productRequest.Id);
@@ -95,7 +90,6 @@ namespace WebApplication1.Presentation.Controllers
         }
 
         [HttpDelete]
-        [Route(template: "Delete")]
         public async Task<ActionResult> DeleteProduct(Guid id)
         {
             var product = await _dataContext.Product.FindAsync(id);

@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.Presentation.Common.DTO_s.Product
+﻿namespace WebApplication1.Presentation.Common.DTO
 {
     public class ProductResponse
     {

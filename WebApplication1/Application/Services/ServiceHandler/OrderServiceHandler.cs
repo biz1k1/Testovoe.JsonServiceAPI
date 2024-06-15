@@ -4,7 +4,7 @@ using WebApplication1.Infrastructure;
 namespace WebApplication1.Application.Services.ServiceHandler
 {
     // CheckStatusOrder()- Сервис,чтобы при обновление заказа вручную не ввели несуществующий статус.
-    // CheckExistProductsForOrder()- смотрит, есть ли на складке нужное количество товара для завершения заказа
+    // CheckExistProductsForOrder()- смотрит, есть ли на складе нужное количество товара для завершения заказа
     public class OrderServiceHandler
     {
         private readonly IStatusOrder _statusOrder;
@@ -21,9 +21,9 @@ namespace WebApplication1.Application.Services.ServiceHandler
             _statusOrder.CheckStatusOrder(status);
         }
 
-        public Product CheckExistProductsAndAddThemToOrder(Product product, int reqeustNumberOfProducts)
+        public Product CheckExistProductsAndAddThemToOrder(Product product, int NumberOfProducts)
         {
-            return _amountProduct.CheckProducts(product,reqeustNumberOfProducts);
+            return _amountProduct.CheckProducts(product,NumberOfProducts);
         }
     }
 }

@@ -1,6 +1,5 @@
-﻿using WebApplication1.Domain.Enums;
+﻿namespace WebApplication1.Presentation.Common.DTO
 
-namespace WebApplication1.Presentation.Common.DTO_s
 {
     public class OrderRequestCreate
     {

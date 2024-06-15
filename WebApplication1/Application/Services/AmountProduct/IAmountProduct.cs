@@ -1,5 +1,4 @@
 ﻿using WebApplication1.Domain.Entity;
-using WebApplication1.Infrastructure;
 
 namespace WebApplication1.Application.Services
 {

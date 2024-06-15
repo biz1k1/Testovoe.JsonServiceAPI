@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WebApplication1.Domain.Entity;
+
 namespace WebApplication1.Infrastructure
 {
     public class ProductsConfiguration : IEntityTypeConfiguration<Product>

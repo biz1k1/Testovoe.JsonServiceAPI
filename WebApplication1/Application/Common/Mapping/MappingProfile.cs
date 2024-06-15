@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using WebApplication1.Domain.Entity;
-using WebApplication1.Presentation.Common.DTO_s;
-using WebApplication1.Presentation.Common.DTO_s.Order;
-using WebApplication1.Presentation.Common.DTO_s.Product;
+using WebApplication1.Presentation.Common.DTO;
 
 namespace WebApplication1.Application.Common.Mapping
 {
