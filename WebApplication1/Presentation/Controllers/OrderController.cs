@@ -73,8 +73,6 @@ namespace WebApplication1.Presentation.Controllers
 
             orderEntity.Products.Add(verifiedProduct);
 
-            //product.Amount = product.Amount - orderRequest.AmountProduct;
-            //_dataContext.Product.Update(product);
 
             await _dataContext.Order.AddAsync(orderEntity);
             await _dataContext.SaveChangesAsync();

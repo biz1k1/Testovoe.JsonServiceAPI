@@ -35,7 +35,7 @@ namespace WebApplication1.Application
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddTransient<IAmountProduct, AmountProduct>();
+            services.AddTransient<IAmountProducts, AmountProducts>();
             services.AddTransient<IStatusOrder, StatusOrder>();
             services.AddTransient<OrderServiceHandler>();
 

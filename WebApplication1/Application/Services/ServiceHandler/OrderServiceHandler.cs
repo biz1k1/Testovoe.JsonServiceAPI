@@ -8,8 +8,8 @@ namespace WebApplication1.Application.Services.ServiceHandler
     public class OrderServiceHandler
     {
         private readonly IStatusOrder _statusOrder;
-        private readonly IAmountProduct _amountProduct;
-        public OrderServiceHandler(DataContext dataContext,IStatusOrder statusOrder, IAmountProduct amountProduct)
+        private readonly IAmountProducts _amountProduct;
+        public OrderServiceHandler(DataContext dataContext,IStatusOrder statusOrder, IAmountProducts amountProduct)
         {
             _statusOrder = statusOrder;
 
