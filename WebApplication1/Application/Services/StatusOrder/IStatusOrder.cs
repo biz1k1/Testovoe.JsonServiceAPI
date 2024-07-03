@@ -1,5 +1,4 @@
-﻿
-namespace WebApplication1.Application.Services
+﻿namespace WebApplication1.Application.Services.StatusOrder
 {
     public interface IStatusOrder
     {

@@ -1,6 +1,6 @@
 ﻿using WebApplication1.Domain.Enums;
 
-namespace WebApplication1.Application.Services
+namespace WebApplication1.Application.Services.StatusOrder
 {
     public class StatusOrder : IStatusOrder
     {

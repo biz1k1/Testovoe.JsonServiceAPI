@@ -1,8 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using System.Text.Json.Serialization;
-using WebApplication1.Application.Services;
+using WebApplication1.Application.Services.AmountProduct;
 using WebApplication1.Application.Services.ServiceHandler;
+using WebApplication1.Application.Services.StatusOrder;
 using WebApplication1.Infrastructure;
+using WebApplication1.Infrastructure.Pipeline;
 
 namespace WebApplication1.Application
 {
@@ -10,7 +15,6 @@ namespace WebApplication1.Application
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, ConfigurationManager configuration)
         {
-            #region Default services
 
             services.AddControllers()
                 .AddJsonOptions(options =>
@@ -21,15 +25,10 @@ namespace WebApplication1.Application
             services.AddSwaggerGen();
 
 
-            #endregion
 
-            #region Connection
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString("DB")));
 
-            #endregion
-
-            #region DI
 
             services.AddTransient<DbContext, DataContext>();
 
@@ -39,7 +38,11 @@ namespace WebApplication1.Application
             services.AddTransient<IStatusOrder, StatusOrder>();
             services.AddTransient<OrderServiceHandler>();
 
-            #endregion
+
+            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
+            services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;
         }

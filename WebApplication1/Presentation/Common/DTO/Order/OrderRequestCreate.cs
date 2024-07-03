@@ -1,9 +1,9 @@
-﻿namespace WebApplication1.Presentation.Common.DTO
+﻿namespace WebApplication1.Presentation.Common.DTO.Order
 
 {
     public class OrderRequestCreate
     {
+        public Guid OrderId { get; set; }
         public Guid ProductId { get; set; }
-        public int AmountProduct { get; set; }
     }
 }

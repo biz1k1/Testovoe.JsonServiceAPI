@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.Presentation.Common.DTO
+﻿namespace WebApplication1.Presentation.Common.DTO.Product
 {
     public class ProductRequestCreate
     {

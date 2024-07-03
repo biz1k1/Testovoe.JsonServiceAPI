@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Domain.Entity;
 using WebApplication1.Infrastructure;
-using WebApplication1.Presentation.Common.DTO;
+using WebApplication1.Infrastructure.Persistence.ProductPersistence.Command;
+using WebApplication1.Infrastructure.Persistence.ProductPersistence.Queries;
+using WebApplication1.Presentation.Common.DTO.Product;
 
 namespace WebApplication1.Presentation.Controllers
 {
@@ -11,98 +14,76 @@ namespace WebApplication1.Presentation.Controllers
     [Route("[controller]")]
     public class ProductController : ControllerBase
     {
-        private readonly DataContext _dataContext;
-        private readonly IMapper _mapper;
-        public ProductController(DataContext dataContext,IMapper mapper)
+        private readonly IMediator _mediator;
+        public ProductController(IMediator mediatR)
         {
-            _dataContext = dataContext;
-            _mapper = mapper;
+            _mediator = mediatR;
         }
 
         [HttpGet]
         public async Task<ActionResult> GetAllProduct()
         {
-            var product = await _dataContext.Product.AsNoTracking().ToListAsync();
-
-            if (product == null)
+            try
             {
-                return NotFound();
+                return Ok(await _mediator.Send(new GetAllProductsQuery()));
             }
-
-            var productResponse = _mapper.Map<List<ProductResponse>>(product);
-
-            return Ok(productResponse);
+            catch(Exception ex)
+            {
+                return BadRequest(ex.InnerException);
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetProductById(Guid id)
         {
-            var product = await _dataContext.Product.AsNoTracking().FirstOrDefaultAsync(x=>x.Id==id);
-
-            if (product == null)
+            try
             {
-                return NotFound();
+                return Ok(await _mediator.Send(new GetProductByIdQuery(id)));
             }
-
-            var productResponse = _mapper.Map<ProductResponse>(product);
-
-            return Ok(productResponse);
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult> CreateProduct(ProductRequestCreate productRequest)
         {
-            var product = await _dataContext.Product.FirstOrDefaultAsync(x=>x.Name==productRequest.Name);
-
-            if (product != null )
+            try
             {
-                return BadRequest();
+                return Ok(await _mediator.Send(new CreateProductCommand(productRequest)));
             }
-
-            var productEntity = _mapper.Map<Product>(productRequest);
-
-            await _dataContext.Product.AddAsync(productEntity);
-            await _dataContext.SaveChangesAsync();
-
-            return Ok();
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         public async Task<ActionResult> UpdateProduct(ProductRequestUpdate productRequest)
         {
-            var product = await _dataContext.Product.FindAsync(productRequest.Id);
-
-            if (product == null)
+            try
             {
-                return NotFound();
-            }   
-
-
-            await _dataContext.Product
-                .Where(x=>x.Id==productRequest.Id)
-                .ExecuteUpdateAsync(x=>x
-                .SetProperty(prop=>prop.Name,productRequest.Name)
-                .SetProperty(prop=>prop.Amount,productRequest.Amount));
-
-            await _dataContext.SaveChangesAsync();
-
-            return Ok();
+                return Ok(await _mediator.Send(new UpdateProductCommands(productRequest)));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete]
         public async Task<ActionResult> DeleteProduct(Guid id)
         {
-            var product = await _dataContext.Product.FindAsync(id);
-
-            if (product == null)
+            try
             {
-                return NotFound();
+                await _mediator.Send(new DeleteProductCommand(id));
+                return Ok();
             }
-
-            _dataContext.Product.Remove(product);
-            await _dataContext.SaveChangesAsync();
-
-            return Ok();
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

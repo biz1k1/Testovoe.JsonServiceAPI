@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using WebApplication1.Domain.Entity;
-using WebApplication1.Presentation.Common.DTO;
+using WebApplication1.Presentation.Common.DTO.Order;
+using WebApplication1.Presentation.Common.DTO.Product;
 
 namespace WebApplication1.Application.Common.Mapping
 {
@@ -11,12 +12,13 @@ namespace WebApplication1.Application.Common.Mapping
             #region Product
             CreateMap<Product, ProductResponse>()
                 .ForMember(x => x.ProductId, src => src.MapFrom(x => x.Id))
-                .ForMember(x=>x.Amount,src=>src.MapFrom(x=>x.Amount))
                 .ForMember(x => x.Name, src => src.MapFrom(x => x.Name));
 
+            CreateMap<Product, ProductResponseForOrder>()
+                .ForMember(x=>x.Name,src=>src.MapFrom(x=>x.Name))
+                .ForMember(x=>x.ProductId,src=>src.MapFrom(x=>x.Id));
             CreateMap<ProductResponse, Product>()
                 .ForMember(x => x.Name, src => src.MapFrom(x => x.Name))
-                .ForMember(x => x.Amount, src => src.MapFrom(x => x.Amount))
                 .ForMember(x => x.Orders, opt => opt.Ignore());
 
             CreateMap<ProductRequestCreate, Product>()
